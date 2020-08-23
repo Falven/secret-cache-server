@@ -12,7 +12,7 @@ $KEYVAULT_NAME = ''
 $KEYVAULT = @{
 }
 
-$SERVICE_PRINCIPAL_NAME = 't-spn-2n-searchpage-01'
+$SERVICE_PRINCIPAL_NAME = ''
 
 $NL = [Environment]::NewLine
 
