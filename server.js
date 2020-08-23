@@ -4,8 +4,6 @@
  * license information.
  */
 
-'use strict';
-
 const http = require('http');
 const EventDrivenSecretCache = require('@mcs/secret-cache');
 
