@@ -45,7 +45,7 @@ $SERVICE_PRINCIPAL_APP_ID = $(az ad sp list --display-name $SERVICE_PRINCIPAL_NA
 Write-Host $SERVICE_PRINCIPAL_APP_ID
 
 Write-Host "$($NL)Give our Service Principal 'get' access to our Key Vault" -ForegroundColor DarkBlue
-az keyvault set-policy --name $KEYVAULT_NAME --spn http://$SERVICE_PRINCIPAL_NAME --secret-permissions get
+az keyvault set-policy --name $KEYVAULT_NAME --spn http://$SERVICE_PRINCIPAL_NAME --secret-permissions get list
 
 Write-Host "$($NL)Get the tenant id for our account" -ForegroundColor DarkBlue
 $TENANT_ID = $(az account show --query tenantId -otsv)
