@@ -9,9 +9,6 @@
 const http = require('http');
 const EventDrivenSecretCache = require('../secret-cache');
 
-const hostname = process.env.HOST || '127.0.0.1';
-const port = process.env.PORT || 3000;
-
 process.env['AZURE_KEYVAULT_NAME'] = 'kv-secret-cache';
 process.env['AZURE_CLIENT_ID'] = '55d7e915-8dda-45f9-b67f-69222d7264fd';
 process.env['AZURE_CLIENT_SECRET'] = '327491ae-b4f2-4da7-9b39-e360562a9d1b';
@@ -27,6 +24,8 @@ const server = http.createServer(async (req, res) => {
   res.end(json);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+const port = process.env.PORT || 3000;
+
+server.listen(port, () => {
+  console.log(`Server running at http://${process.env.HOST}:${port}/`);
 });
