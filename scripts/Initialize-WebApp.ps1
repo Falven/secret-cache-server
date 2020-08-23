@@ -33,9 +33,6 @@ az appservice plan create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_
 Write-Host "$($NL)Create our Web App" -ForegroundColor DarkBlue
 az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME
 
-Write-Host "$($NL)Deploy our Web App code from a public GitHub repository" -ForegroundColor DarkBlue
-az webapp deployment source config --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --manual-integration
-
 Write-Host @"
 Azure Web App:
 https://$WEB_APP_NAME.azurewebsites.net/
