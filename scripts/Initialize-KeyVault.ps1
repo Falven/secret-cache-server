@@ -52,6 +52,7 @@ $TENANT_ID = $(az account show --query tenantId -otsv)
 
 Write-Host @"
 Azure Key Vault Parameters:
+key Vault Name:     $KEYVAULT_NAME
 Client Id:          $SERVICE_PRINCIPAL_APP_ID
 Client Secret:      $SERVICE_PRINCIPAL_PASSWORD
 Tenant Id:          $TENANT_ID
