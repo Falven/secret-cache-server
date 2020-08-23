@@ -27,22 +27,18 @@ if ($rgExists -eq 'false') {
   az group create --name $RESOURCE_GROUP_NAME --location $RESOURCE_GROUP_LOCATION
 }
 
-Write-Host "$($NL)Create an App Service plan in FREE tier" -ForegroundColor DarkBlue
+Write-Host "$($NL)Create an App Service plan in $WEB_APP_SKU tier" -ForegroundColor DarkBlue
 az appservice plan create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --sku $WEB_APP_SKU
 
 Write-Host "$($NL)Create our Web App" -ForegroundColor DarkBlue
 az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME
 
 Write-Host "$($NL)Deploy our Web App code from a public GitHub repository" -ForegroundColor DarkBlue
-az webapp deployment source config --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --repo-url $GIT_REPO --branch $GIT_REPO_BRANCH --manual-integration
+az webapp deployment source config --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --manual-integration
 
 Write-Host @"
-Azure Web App Parameters:
-Client Id:          $SERVICE_PRINCIPAL_APP_ID
-Client Secret:      $SERVICE_PRINCIPAL_PASSWORD
-Tenant Id:          $TENANT_ID
-Subscription Id:    $SUBSCRIPTION_ID
-Vault Uri:          $KEYVAULT_URI
-Api Version:        2016-10-01
-Key Vault Resource: https://vault.azure.net
+Azure Web App:
+https://$WEB_APP_NAME.azurewebsites.net/
+$GIT_REPO
+$GIT_REPO_BRANCH
 "@ -ForegroundColor DarkGreen
