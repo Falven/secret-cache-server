@@ -1,0 +1,12 @@
+{
+  "name": "@mcs/secret-cache-server",
+  "version": "1.0.0",
+  "description": "A Node.js application that hosts and updates an Azure Key Vault secret cache.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Fran Aguilera",
+  "license": "ISC",
+  "dependencies": {
+    "prettier": "^2.0.5"
+  }
+}
