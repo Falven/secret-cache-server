@@ -9,5 +9,9 @@
   "dependencies": {
     "@mcs/secret-cache": "Falven/secret-cache#master",
     "prettier": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=10.17.0 <10.19.0",
+    "npm": ">=6.9.0 <6.15.0"
   }
 }
