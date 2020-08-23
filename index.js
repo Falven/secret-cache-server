@@ -7,7 +7,7 @@
 'use strict';
 
 const http = require('http');
-const EventDrivenSecretCache = require('../secret-cache');
+const EventDrivenSecretCache = require('@mcs/secret-cache');
 
 process.env['AZURE_KEYVAULT_NAME'] = 'kv-secret-cache';
 process.env['AZURE_CLIENT_ID'] = '55d7e915-8dda-45f9-b67f-69222d7264fd';

@@ -7,6 +7,7 @@
   "author": "Fran Aguilera",
   "license": "ISC",
   "dependencies": {
+    "@mcs/secret-cache": "Falven/secret-cache#master",
     "prettier": "^2.0.5"
   }
 }
