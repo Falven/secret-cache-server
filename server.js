@@ -27,6 +27,7 @@ server.get("/", async (req, res) => {
 server.use(bodyParser.json());
 
 server.post("/api/updates", (req, res) => {
+  console.log('Received WebHook trigger.');
 
   // Check for Webhook validation handshake
   var header = req.get("aeg-event-type");
@@ -49,7 +50,6 @@ server.post("/api/updates", (req, res) => {
   }
 
   // Do something on other event types
-  console.log('Received WebHook trigger.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
 });
