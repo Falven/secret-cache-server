@@ -21,7 +21,6 @@ server.get("/", async (req, res) => {
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
-// Tell express to use body-parser's JSON parsing
 server.use(bodyParser.json());
 
 server.post("/api/updates", async (req, res) => {
