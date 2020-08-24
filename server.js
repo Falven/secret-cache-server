@@ -15,7 +15,7 @@ process.env['AZURE_TENANT_ID'] = '215fd765-750e-4adf-8bb7-7a009994dde6';
 
 const server = express();
 const port = process.env.PORT || 3000;
-const cache = new EventDrivenSecretCache(server);
+const cache = new EventDrivenSecretCache();
 
 server.get("/", (_req, res) => {
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
@@ -24,40 +24,38 @@ server.get("/", (_req, res) => {
 server.use(bodyParser.json());
 
 server.post("/api/updates", async (req, res) => {
-  console.log('Received event.');
+  console.log('Received Event.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
 
-  if (req.body && Object.keys(req.body).length > 0) {
-    console.log('In body.');
+  var header = req.get("Aeg-Event-Type");
+  if (header && req.body && Object.keys(req.body).length > 0) {
+    console.log('Header exists.');
     var event = req.body[0];
 
-    // Check for Webhook validation handshake event type.
-    if (requestIsEventType(req, 'Microsoft.EventGrid.SubscriptionValidationEvent')) {
-      console.log('Event is SubscriptionValidationEvent.');
-      return res.send({"validationResponse": event.data.validationCode});
-    }
+    if (event && event.eventType && event.data) {
+      console.log('Body exists.');
+      // Check for Webhook validation handshake event type.
+      if (header === 'SubscriptionValidation') {
+        console.log('SubscriptionValidation event.');
+        if (event.data.validationCode && event.eventType == 'Microsoft.EventGrid.SubscriptionValidationEvent') {
+          console.log('Microsoft.EventGrid.SubscriptionValidationEvent');
+          return res.send({"validationResponse": event.data.validationCode})
+        }
+      }
 
-    // Check for KeyVault secret event type.
-    if (requestIsEventType(req, 'Microsoft.KeyVault.SecretNewVersionCreated')) {
-      console.log('Event is SecretNewVersionCreated.');
-      await cache.updateSecret(event.data.ObjectName);
-      return res.status(200).end();
+      // Check for KeyVault secret event type.
+      if (header === 'Notification') {
+        console.log('Notification event.');
+        if (event.eventType == 'Microsoft.KeyVault.SecretNewVersionCreated') {
+          console.log('Microsoft.KeyVault.SecretNewVersionCreated');
+          await cache.updateSecret(event.data.ObjectName);
+          return res.status(200).end();
+        }
+      }
     }
   }
-  
-  console.log('Past body.');
 });
-
-function requestIsEventType(req, eventType) {
-  var eventType = req.get("aeg-event-type");
-  if (eventType && eventType === 'SubscriptionValidation') {
-    return event &&
-      event.eventType && event.eventType == requestedType &&
-      event.data && event.data.validationCode;
-  }
-  return false;
-}
 
 server.listen(port, async () => {
   await cache.init();
