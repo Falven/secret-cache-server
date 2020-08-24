@@ -57,7 +57,7 @@ function requestIsEventType(req, eventType) {
   return false;
 }
 
-server.listen(port, () => {
+server.listen(port, async () => {
   console.log(`🚀 Server running on port ${port}`);
   await cache.init();
 });
