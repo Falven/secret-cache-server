@@ -17,8 +17,7 @@ const server = express();
 const port = process.env.PORT || 3000;
 const cache = new EventDrivenSecretCache();
 
-server.get("/", async (req, res) => {
-  await cache.init();
+server.get("/", (_req, res) => {
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
@@ -56,6 +55,7 @@ function requestIsEventType(req, eventType) {
   return false;
 }
 
-server.listen(port, () => {
+server.listen(port, async () => {
+  await cache.init();
   console.log(`🚀 Server running on port ${port}`);
 });
