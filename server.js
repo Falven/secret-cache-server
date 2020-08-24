@@ -15,7 +15,7 @@ process.env['AZURE_TENANT_ID'] = '215fd765-750e-4adf-8bb7-7a009994dde6';
 
 const server = express();
 const port = process.env.PORT || 3000;
-const cache = new EventDrivenSecretCache();
+const cache = new EventDrivenSecretCache(server);
 
 server.get("/", (_req, res) => {
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
@@ -29,6 +29,7 @@ server.post("/api/updates", async (req, res) => {
   console.log('Body:\n' + JSON.stringify(req.body));
 
   if (req.body && Object.keys(req.body).length > 0) {
+    console.log('In body.');
     var event = req.body[0];
 
     // Check for Webhook validation handshake event type.
@@ -44,6 +45,8 @@ server.post("/api/updates", async (req, res) => {
       return res.status(200).end();
     }
   }
+  
+  console.log('Past body.');
 });
 
 function requestIsEventType(req, eventType) {
