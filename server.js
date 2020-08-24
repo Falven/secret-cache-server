@@ -18,40 +18,47 @@ const port = process.env.PORT || 3000;
 const cache = new EventDrivenSecretCache();
 
 server.get("/", async (req, res) => {
-  await cache.init();
-
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
 // Tell express to use body-parser's JSON parsing
 server.use(bodyParser.json());
 
-server.post("/api/updates", (req, res) => {
+server.post("/api/updates", async (req, res) => {
   console.log('Received WebHook trigger.');
-
-  // Check for Webhook validation handshake
-  var header = req.get("aeg-event-type");
-  if (header && header === 'SubscriptionValidation') {
-    if (req.body && Object.keys(req.body).length > 0) {
-      var event = req.body[0];
-      var isValidationEvent =
-        event &&
-        event.eventType &&
-        event.eventType == 'Microsoft.EventGrid.SubscriptionValidationEvent' &&
-        event.data &&
-        event.data.validationCode;
-
-      if (isValidationEvent) {
-        return res.send({
-          "validationResponse": event.data.validationCode
-        });
-      }
-    }
-  }
-
-  // Do something on other event types
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
+
+  if (req.body && Object.keys(req.body).length > 0) {
+    var event = req.body[0];
+
+    // Check for Webhook validation handshake event type.
+    if (requestIsEventType(req, 'Microsoft.EventGrid.SubscriptionValidationEvent')) {
+      return res.send({"validationResponse": event.data.validationCode});
+    }
+
+    // Check for KeyVault secret event type.
+    if (requestIsEventType(req, 'Microsoft.KeyVault.SecretNewVersionCreated')) {
+      // update the secret
+      await cache.updateSecret(event.data.ObjectName);
+      return res.status(200).end();
+    }
+  }
 });
 
-server.listen(port, () => console.log(`🚀 Server running on port ${port}`));
+function requestIsEventType(req, eventType) {
+  var eventType = req.get("aeg-event-type");
+  if (eventType && eventType === 'SubscriptionValidation') {
+    return event &&
+      event.eventType &&
+      event.eventType == requestedType &&
+      event.data &&
+      event.data.validationCode;
+  }
+  return false;
+}
+
+server.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
+  await cache.init();
+});
