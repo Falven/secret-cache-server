@@ -31,7 +31,7 @@ Write-Host "$($NL)Create an App Service plan in $WEB_APP_SKU tier" -ForegroundCo
 az appservice plan create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --sku $WEB_APP_SKU
 
 Write-Host "$($NL)Create our Web App" -ForegroundColor DarkBlue
-az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME --runtime '"node|10.15"'
+az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME --runtime '"node|12.18"'
 
 Write-Host "$($NL)Setting up local git deployment" -ForegroundColor DarkBlue
 az webapp deployment source config-local-git --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME
