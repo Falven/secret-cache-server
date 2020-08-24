@@ -5,6 +5,7 @@
  */
 
 const express = require("express");
+const bodyParser = require('body-parser');
 const EventDrivenSecretCache = require('@mcs/secret-cache');
 
 process.env['AZURE_KEYVAULT_NAME'] = 'kv-secret-cache';
@@ -22,13 +23,15 @@ server.get("/", async (req, res) => {
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
+// Tell express to use body-parser's JSON parsing
+server.use(bodyParser.json());
+
 server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
   console.log('Params:\n' + JSON.stringify(req.params));
   console.log('Query:\n' + JSON.stringify(req.query));
-  console.log('\nRequest:\n' + JSON.stringify(req));
 
   // Check for Webhook validation handshake
   var header = req.get("aeg-event-type");
