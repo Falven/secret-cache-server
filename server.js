@@ -26,9 +26,13 @@ server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
+  console.log('Params:\n' + JSON.stringify(req.params));
 
-  // var header = req.get("Aeg-Event-Type");
-  // if(header && header === 'SubscriptionValidation') {
+  // Check for Webhook validation handshake
+  var header = req.get("aeg-event-type");
+  if(header && header === 'SubscriptionValidation') {
+
+  }
   //     var event = req.body[0]
   //     var isValidationEvent = event && event.data && 
   //                             event.data.validationCode &&
