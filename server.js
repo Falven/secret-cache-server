@@ -18,8 +18,10 @@ const server = http.createServer(async (req, res) => {
 
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
-  var key = Object.keys(cache.secrets)[0];
-  const json = cache.secrets[key];
+  
+  for (key in Object.keys(cache.secrets)) {
+    json[key] = cache.secrets[key];
+  }
   res.end(json);
 });
 
