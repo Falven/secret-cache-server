@@ -14,7 +14,7 @@ process.env['AZURE_TENANT_ID'] = '215fd765-750e-4adf-8bb7-7a009994dde6';
 
 const server = http.createServer(async (req, res) => {
   var cache = new EventDrivenSecretCache();
-  // await cache.init();
+  await cache.init();
 
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
