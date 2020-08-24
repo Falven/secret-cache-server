@@ -22,5 +22,5 @@ server.get("/", (_req, res) => {
 
 server.listen(port, async () => {
   await cache.init();
-  console.log(`🚀 Server running on port ${port}`);
+  console.log(`🚀 Server running on port ${port}!`);
 });
