@@ -18,8 +18,7 @@ const server = http.createServer(async (req, res) => {
 
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
-
-  res.end(cache.secrets);
+  res.end(JSON.stringify(cache.secrets));
 });
 
 const port = process.env.PORT || 3000;
