@@ -5,7 +5,6 @@
  */
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const EventDrivenSecretCache = require('@mcs/secret-cache');
 
 process.env['AZURE_KEYVAULT_NAME'] = 'kv-secret-cache';
