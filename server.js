@@ -48,7 +48,10 @@ server.post("/api/updates", (req, res) => {
     }
   }
 
-  // Do something on other event types 
+  // Do something on other event types
+  console.log('Received WebHook trigger.');
+  console.log('Headers:\n' + JSON.stringify(req.headers));
+  console.log('Body:\n' + JSON.stringify(req.body));
 });
 
 server.listen(port, () => console.log(`🚀 Server running on port ${port}`));
