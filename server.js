@@ -18,8 +18,8 @@ const server = http.createServer(async (req, res) => {
 
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
-  // const json = cache.secrets['ServiceDiscoveryData'];
-  res.end('{ hello: "world" }');
+  const json = cache.secrets['ServiceDiscoveryData'];
+  res.end(json);
 });
 
 const port = process.env.PORT || 3000;
