@@ -19,7 +19,6 @@ const cache = new EventDrivenSecretCache(server);
 server.get("/", async (req, res) => {
   await cache.init();
 
-  // Respond with secrets in JSON.
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
