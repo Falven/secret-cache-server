@@ -31,7 +31,17 @@ Write-Host "$($NL)Create an App Service plan in $WEB_APP_SKU tier" -ForegroundCo
 az appservice plan create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --sku $WEB_APP_SKU
 
 Write-Host "$($NL)Create our Web App" -ForegroundColor DarkBlue
-az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME
+az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME --runtime '"node|10.15"'
+
+Write-Host "$($NL)Setting up local git deployment" -ForegroundColor DarkBlue
+az webapp deployment source config-local-git --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME
+
+Write-Host "$($NL)Enter git deployment credentials" -ForegroundColor DarkBlue
+$credentials = Get-Credential
+az webapp deployment user set --user-name $credentials.UserName --password $(ConvertFrom-SecureString $credentials.Password -AsPlainText)
+
+Write-Host "$($NL)Opening our Web App" -ForegroundColor DarkBlue
+az webapp browse --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME
 
 Write-Host @"
 Azure Web App:
