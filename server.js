@@ -18,6 +18,7 @@ const port = process.env.PORT || 3000;
 const cache = new EventDrivenSecretCache();
 
 server.get("/", async (req, res) => {
+  await cache.init();
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
@@ -49,15 +50,12 @@ function requestIsEventType(req, eventType) {
   var eventType = req.get("aeg-event-type");
   if (eventType && eventType === 'SubscriptionValidation') {
     return event &&
-      event.eventType &&
-      event.eventType == requestedType &&
-      event.data &&
-      event.data.validationCode;
+      event.eventType && event.eventType == requestedType &&
+      event.data && event.data.validationCode;
   }
   return false;
 }
 
-server.listen(port, async () => {
+server.listen(port, () => {
   console.log(`🚀 Server running on port ${port}`);
-  await cache.init();
 });
