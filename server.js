@@ -24,6 +24,7 @@ server.get("/", async (req, res) => {
 
 server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
+  console.log('Headers:\n' + req.headers);
 
   var header = req.get("Aeg-Event-Type");
   if(header && header === 'SubscriptionValidation') {
