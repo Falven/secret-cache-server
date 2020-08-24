@@ -14,7 +14,7 @@ process.env['AZURE_TENANT_ID'] = '215fd765-750e-4adf-8bb7-7a009994dde6';
 
 const server = express();
 const port = process.env.PORT || 3000;
-const cache = new EventDrivenSecretCache(server);
+const cache = new EventDrivenSecretCache();
 
 server.get("/", async (req, res) => {
   await cache.init();
@@ -22,7 +22,7 @@ server.get("/", async (req, res) => {
   res.status(200).set('Content-Type', 'application/json').end(JSON.stringify(cache.secrets));
 });
 
-expressServer.post("/api/updates", (req, res) => {
+server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
 
   var header = req.get("Aeg-Event-Type");

@@ -35,7 +35,7 @@ Write-Host "$($NL)Create Event Grid topic" -ForegroundColor DarkBlue
 az eventgrid topic create --name $EVENT_GRID_TOPIC_NAME -l $RESOURCE_GROUP_LOCATION -g $RESOURCE_GROUP_NAME
 
 Write-Host "$($NL)Subscribe our endpoint to our topic" -ForegroundColor DarkBlue
-az eventgrid event-subscription create --source-resource-id "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP_NAME/providers/Microsoft.EventGrid/topics/$EVENT_GRID_TOPIC_NAME" --name $EVENT_GRID_SUB_NAME --endpoint $EVENT_GRID_ENDPOINT
+az eventgrid event-subscription create --source-resource-id "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP_NAME/providers/Microsoft.EventGrid/topics/$EVENT_GRID_TOPIC_NAME" --name $EVENT_GRID_SUB_NAME --endpoint-type 'webhook' --endpoint $EVENT_GRID_ENDPOINT
 
 Write-Host @"
 Azure Event Grid Parameters:
