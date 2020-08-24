@@ -9,7 +9,7 @@ $RESOURCE_GROUP_LOCATION = ''
 
 $KEYVAULT_NAME = ''
 
-$KEYVAULT = @{
+$KEYVAULT_SECRETS = @{
 }
 
 $SERVICE_PRINCIPAL_NAME = ''
@@ -35,7 +35,7 @@ Write-Host "$($NL)Get our Key Vault's URI" -ForegroundColor DarkBlue
 $KEYVAULT_URI = $(az keyvault show --name $KEYVAULT_NAME --query properties.vaultUri -otsv)
 
 Write-Host "$($NL)Populate our secrets" -ForegroundColor DarkBlue
-foreach ($secret in $KEYVAULT.GetEnumerator()) { az keyvault secret set --name $secret.Name --vault-name $KEYVAULT_NAME --value $secret.Value }
+foreach ($secret in $KEYVAULT_SECRETS.GetEnumerator()) { az keyvault secret set --name $secret.Name --vault-name $KEYVAULT_NAME --value $secret.Value }
 
 Write-Host "$($NL)Create a service principal to access the Key Vault" -ForegroundColor DarkBlue
 $SERVICE_PRINCIPAL_PASSWORD = $((az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME) | Out-String | ConvertFrom-Json).password
