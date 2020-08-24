@@ -25,6 +25,7 @@ server.get("/", async (req, res) => {
 server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
+  console.log('Body:\n' + JSON.stringify(req.body));
 
   // var header = req.get("Aeg-Event-Type");
   // if(header && header === 'SubscriptionValidation') {
@@ -39,8 +40,23 @@ server.post("/api/updates", (req, res) => {
   //     }
   // }
 
+  // context.log('JavaScript HTTP trigger function begun');
+  //   var validationEventType = "Microsoft.EventGrid.SubscriptionValidationEvent";
+
+  //   for (var events in req.body) {
+  //       var body = req.body[events];
+  //       // Deserialize the event data into the appropriate type based on event type
+  //       if (body.data && body.eventType == validationEventType) {
+  //           context.log("Got SubscriptionValidation event data, validation code: " + body.data.validationCode + " topic: " + body.topic);
+
+  //           // Do any additional validation (as required) and then return back the below response
+  //           var code = body.data.validationCode;
+  //           context.res = { status: 200, body: { "ValidationResponse": code } };
+  //       }
+  //   }
+  //   context.done();
+
   // Do something on other event types 
-  console.log(req.body)
   res.send(req.body)
 });
 
