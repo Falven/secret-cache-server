@@ -28,6 +28,7 @@ server.post("/api/updates", (req, res) => {
   console.log('Body:\n' + JSON.stringify(req.body));
   console.log('Params:\n' + JSON.stringify(req.params));
   console.log('Query:\n' + JSON.stringify(req.query));
+  console.log('\nRequest:\n' + JSON.stringify(req));
 
   // Check for Webhook validation handshake
   var header = req.get("aeg-event-type");
