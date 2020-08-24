@@ -30,43 +30,29 @@ server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
-  console.log('Params:\n' + JSON.stringify(req.params));
-  console.log('Query:\n' + JSON.stringify(req.query));
 
   // Check for Webhook validation handshake
   var header = req.get("aeg-event-type");
-  if(header && header === 'SubscriptionValidation') {
+  if (header && header === 'SubscriptionValidation') {
+    var bodyLength = Object.keys(myParsedBodyObject).length;
+    if (req.body && bodyLength > 0) {
+      var event = req.body[0];
+      var isValidationEvent =
+        event &&
+        event.eventType &&
+        event.eventType == 'Microsoft.EventGrid.SubscriptionValidationEvent' &&
+        event.data &&
+        event.data.validationCode;
 
+      if (isValidationEvent) {
+        return res.send({
+          "validationResponse": event.data.validationCode
+        });
+      }
+    }
   }
-  //     var event = req.body[0]
-  //     var isValidationEvent = event && event.data && 
-  //                             event.data.validationCode &&
-  //                             event.eventType && event.eventType == 'Microsoft.EventGrid.SubscriptionValidationEvent'
-  //     if(isValidationEvent){
-  //         return res.send({
-  //             "validationResponse": event.data.validationCode
-  //         })
-  //     }
-  // }
-
-  // context.log('JavaScript HTTP trigger function begun');
-  //   var validationEventType = "Microsoft.EventGrid.SubscriptionValidationEvent";
-
-  //   for (var events in req.body) {
-  //       var body = req.body[events];
-  //       // Deserialize the event data into the appropriate type based on event type
-  //       if (body.data && body.eventType == validationEventType) {
-  //           context.log("Got SubscriptionValidation event data, validation code: " + body.data.validationCode + " topic: " + body.topic);
-
-  //           // Do any additional validation (as required) and then return back the below response
-  //           var code = body.data.validationCode;
-  //           context.res = { status: 200, body: { "ValidationResponse": code } };
-  //       }
-  //   }
-  //   context.done();
 
   // Do something on other event types 
-  res.send(req.body)
 });
 
 server.listen(port, () => console.log(`🚀 Server running on port ${port}`));
