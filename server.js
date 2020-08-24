@@ -4,7 +4,7 @@
  * license information.
  */
 
-const express = require("express");
+const express = require('express');
 const bodyParser = require('body-parser');
 const EventDrivenSecretCache = require('@mcs/secret-cache');
 
@@ -27,15 +27,11 @@ server.get("/", async (req, res) => {
 server.use(bodyParser.json());
 
 server.post("/api/updates", (req, res) => {
-  console.log('Received WebHook trigger.');
-  console.log('Headers:\n' + JSON.stringify(req.headers));
-  console.log('Body:\n' + JSON.stringify(req.body));
 
   // Check for Webhook validation handshake
   var header = req.get("aeg-event-type");
   if (header && header === 'SubscriptionValidation') {
-    var bodyLength = Object.keys(myParsedBodyObject).length;
-    if (req.body && bodyLength > 0) {
+    if (req.body && Object.keys(req.body).length > 0) {
       var event = req.body[0];
       var isValidationEvent =
         event &&
