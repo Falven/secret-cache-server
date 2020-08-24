@@ -8,6 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "@mcs/secret-cache": "Falven/secret-cache#master",
+    "express": "^4.17.1",
     "prettier": "^2.0.5"
   },
   "engines": {
