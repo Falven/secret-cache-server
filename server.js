@@ -24,20 +24,20 @@ server.get("/", async (req, res) => {
 
 server.post("/api/updates", (req, res) => {
   console.log('Received WebHook trigger.');
-  console.log('Headers:\n' + req.headers);
+  console.log('Headers:\n' + JSON.stringify(req.headers));
 
-  var header = req.get("Aeg-Event-Type");
-  if(header && header === 'SubscriptionValidation') {
-      var event = req.body[0]
-      var isValidationEvent = event && event.data && 
-                              event.data.validationCode &&
-                              event.eventType && event.eventType == 'Microsoft.EventGrid.SubscriptionValidationEvent'
-      if(isValidationEvent){
-          return res.send({
-              "validationResponse": event.data.validationCode
-          })
-      }
-  }
+  // var header = req.get("Aeg-Event-Type");
+  // if(header && header === 'SubscriptionValidation') {
+  //     var event = req.body[0]
+  //     var isValidationEvent = event && event.data && 
+  //                             event.data.validationCode &&
+  //                             event.eventType && event.eventType == 'Microsoft.EventGrid.SubscriptionValidationEvent'
+  //     if(isValidationEvent){
+  //         return res.send({
+  //             "validationResponse": event.data.validationCode
+  //         })
+  //     }
+  // }
 
   // Do something on other event types 
   console.log(req.body)
