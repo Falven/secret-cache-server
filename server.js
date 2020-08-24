@@ -24,7 +24,7 @@ server.get("/", (_req, res) => {
 server.use(bodyParser.json());
 
 server.post("/api/updates", async (req, res) => {
-  console.log('Received WebHook trigger.');
+  console.log('Received event.');
   console.log('Headers:\n' + JSON.stringify(req.headers));
   console.log('Body:\n' + JSON.stringify(req.body));
 
@@ -33,12 +33,13 @@ server.post("/api/updates", async (req, res) => {
 
     // Check for Webhook validation handshake event type.
     if (requestIsEventType(req, 'Microsoft.EventGrid.SubscriptionValidationEvent')) {
+      console.log('Event is SubscriptionValidationEvent.');
       return res.send({"validationResponse": event.data.validationCode});
     }
 
     // Check for KeyVault secret event type.
     if (requestIsEventType(req, 'Microsoft.KeyVault.SecretNewVersionCreated')) {
-      // update the secret
+      console.log('Event is SecretNewVersionCreated.');
       await cache.updateSecret(event.data.ObjectName);
       return res.status(200).end();
     }
