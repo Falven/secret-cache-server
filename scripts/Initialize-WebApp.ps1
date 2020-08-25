@@ -30,10 +30,6 @@ az appservice plan create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_
 Write-Host "$($NL)Create our Web App" -ForegroundColor DarkBlue
 az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME --runtime '"node|12.9"'
 
-Write-Host "$($NL)Enter git deployment credentials" -ForegroundColor DarkBlue
-$credentials = Get-Credential
-az webapp deployment user set --user-name $credentials.UserName --password $(ConvertFrom-SecureString $credentials.Password -AsPlainText)
-
 Write-Host "$($NL)Opening our Web App" -ForegroundColor DarkBlue
 az webapp browse --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME
 
