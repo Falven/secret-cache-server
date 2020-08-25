@@ -12,7 +12,7 @@ You begin to design a solution. The first solution that comes to mind involves k
 
 *How would we update the application when we change any of our secrets in Key Vault?*
 
-![Polling Design](Polling Design.jpg)
+![Polling Design](https://raw.githubusercontent.com/Falven/secret-cache-server/master/images/Polling Design.jpg)
 
 1. The application goes to Azure and retrieves our secrets.
 2. Secrets are kept in-memory and accessed as needed.
@@ -27,7 +27,7 @@ While a decent solution, several issues come to mind:
 
 Azure Event Grid to the rescue. With Event Grid, we can have event-driven secrets management. What this means is event grid can seamlessly notify our application when a secret has been updated.
 
-![EventGrid Design](EventGrid Design.jpg)
+![EventGrid Design](https://raw.githubusercontent.com/Falven/secret-cache-server/master/images/EventGrid Design.jpg)
 
 1. The application goes to Azure and retrieves our secrets.
 2. Secrets are kept in-memory and accessed as needed.
