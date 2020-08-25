@@ -7,10 +7,10 @@
 const express = require('express');
 const EventDrivenSecretCache = require('@mcs/secret-cache');
 
-process.env['AZURE_KEYVAULT_NAME'] = 'kv-secret-cache';
-process.env['AZURE_CLIENT_ID'] = '55d7e915-8dda-45f9-b67f-69222d7264fd';
-process.env['AZURE_CLIENT_SECRET'] = '327491ae-b4f2-4da7-9b39-e360562a9d1b';
-process.env['AZURE_TENANT_ID'] = '215fd765-750e-4adf-8bb7-7a009994dde6';
+process.env['AZURE_KEYVAULT_NAME'] = '';
+process.env['AZURE_CLIENT_ID'] = '';
+process.env['AZURE_CLIENT_SECRET'] = '';
+process.env['AZURE_TENANT_ID'] = '';
 
 const server = express();
 const port = process.env.PORT || 3000;
