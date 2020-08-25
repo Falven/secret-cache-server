@@ -7,7 +7,7 @@ So you look to the cloud and find that Azure Key Vault perfectly meets your need
 However, maybe your application frequently uses these secrets, but keeping your application secrets on disk is not an option from a security standpoint, a common issue with enterprise applications.
 
 ## Polling Solution
----
+
 You begin to design a solution. The first solution that comes to mind involves keeping a cache of your secrets in memory. It sounds great in theory, however, an issue comes to mind:
 
 *How would we update the application when we change any of our secrets in Key Vault?*
@@ -24,7 +24,7 @@ While a decent solution, several issues come to mind:
 - Our application would have to needlessly fetch all secrets each interval as it would not know which have changed. This can be exponentially expensive with many secrets.
 
 ## Event Grid Solution
----
+
 Azure Event Grid to the rescue. With Event Grid, we can have event-driven secrets management. What this means is event grid can seamlessly notify our application when a secret has been updated.
 
 ![EventGrid Design](EventGrid Design.jpg)
@@ -35,7 +35,7 @@ Azure Event Grid to the rescue. With Event Grid, we can have event-driven secret
 4. EventGrid then notifies our application of the specific change, allowing the application to react to specific changes in our KeyVault.
 
 ## Setup
----
+
 This repository represents a simplified Event Grid solution implementation.
 It is a simple express server that uses our [secret-cache](https://github.com/Falven/secret-cache) implementation to maintain our cache of secrets. It is written in [Node.js](https://nodejs.org/en/) and uses [Express.js](https://expressjs.com/). Initial setup of Node and NPM is not covered here.
 
