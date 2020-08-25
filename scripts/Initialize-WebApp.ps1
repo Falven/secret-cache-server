@@ -7,9 +7,6 @@ $SUBSCRIPTION_ID = ''
 $RESOURCE_GROUP_NAME = ''
 $RESOURCE_GROUP_LOCATION = ''
 
-$GIT_REPO = ''
-$GIT_REPO_BRANCH = ''
-
 $WEB_APP_NAME = ''
 $WEB_APP_SKU = ''
 
@@ -32,9 +29,6 @@ az appservice plan create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_
 
 Write-Host "$($NL)Create our Web App" -ForegroundColor DarkBlue
 az webapp create --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME --plan $WEB_APP_NAME --runtime '"node|12.9"'
-
-Write-Host "$($NL)Setting up local git deployment" -ForegroundColor DarkBlue
-az webapp deployment source config-local-git --name $WEB_APP_NAME --resource-group $RESOURCE_GROUP_NAME
 
 Write-Host "$($NL)Enter git deployment credentials" -ForegroundColor DarkBlue
 $credentials = Get-Credential
